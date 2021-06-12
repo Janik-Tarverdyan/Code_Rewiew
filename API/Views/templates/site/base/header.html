@@ -1,0 +1,194 @@
+{% import "site/base/components/menu.html" as menu %}
+
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="color" content="#333">
+
+    <title> Master Mind | {% block title %}{% endblock title %} </title>
+    <link rel="shortcut icon" style="width: 50px" href="{{ title_icon }}">
+
+    <!--Google Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% assets "site_css" %}
+        <!-- Styles -->
+        <link href="{{ ASSET_URL }}" rel="stylesheet">
+    {% endassets %}
+
+    {% assets "IE_Script" %}
+        <!--[if lt IE 9]>
+      <script src="{{ ASSET_URL }}"></script>
+    <![endif]-->
+    {% endassets %}
+</head>
+<body>
+<!-- Start Page Loading -->
+<div id="ms-preload" class="ms-preload">
+    <div id="status">
+        <div class="spinner">
+            <div class="dot1"></div>
+            <div class="dot2"></div>
+        </div>
+    </div>
+</div>
+<!-- End Page Loading -->
+
+
+<div class="ms-site-container">
+
+    {{ menu.Header(
+                    Brand=LT['Brand'],
+                    Name=LT['Name']
+       ) }}
+
+    {{ menu.Navbar(
+                    Mode='default',
+                    Brand=LT['Brand'],
+                    Name=LT['Name'],
+                    Menu_items=urls
+      ) }}
+
+    {% block components %}{% endblock %}
+
+
+    <aside class="ms-footbar">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 ms-footer-col">
+                    <div class="ms-footbar-block">
+                        <h3 class="ms-footbar-title">{{ Subscribe['Title'] }}</h3>
+                        <p class="">{{ Subscribe['Text'] }}</p>
+                        <form action="{{ Subscribe['Form'].action }}" method="{{ Subscribe['Form'].method }}">
+                            <div class="form-group label-floating mt-2 mb-1 is-empty">
+                                <div class="input-group ms-input-subscribe">
+                                    <label class="control-label" for="ms-subscribe"><i class="zmdi zmdi-email"></i> {{ Subscribe['Form'].Input_Label }} </label>
+                                    <input required type="email" name="Email" id="ms-subscribe" class="form-control">
+                                </div>
+                            </div>
+                            <button name='submit' value="Subscribe" class="ms-subscribre-btn" type="submit"> {{ Subscribe['Form'].Button_Label }} </button>
+                        </form>
+                    </div>
+                </div>
+                <div id="middle_block" class="col-lg-5 col-md-7 ms-footer-col">
+                    {#            <div class="col-lg-5 col-md-7 ms-footer-col ms-footer-alt-color">#}
+                    {#              <div class="ms-footbar-block">#}
+                    {#                <h3 class="ms-footbar-title text-center mb-2">Last Articles</h3>#}
+                    {#                <div class="ms-footer-media">#}
+                    {#                  <div class="media">#}
+                    {#                    <div class="media-left media-middle">#}
+                    {#                      <a href="javascript:void(0)">#}
+                    {#                        <img class="media-object media-object-circle" src="https://agmstudio.io/themes/material-style/2.4.4/assets/img/demo/p75.jpg" alt="...">#}
+                    {#                      </a>#}
+                    {#                    </div>#}
+                    {#                    <div class="media-body">#}
+                    {#                      <h4 class="media-heading"><a href="javascript:void(0)">Lorem ipsum dolor sit expedita cumque amet consectetur adipisicing repellat</a></h4>#}
+                    {#                      <div class="media-footer">#}
+                    {#                        <span><i class="zmdi zmdi-time color-info-light"></i> August 18, 2016</span>#}
+                    {#                        <span><i class="zmdi zmdi-folder-outline color-warning-light"></i> <a href="javascript:void(0)">Design</a></span>#}
+                    {#                      </div>#}
+                    {#                    </div>#}
+                    {#                  </div>#}
+                    {#                  <div class="media">#}
+                    {#                    <div class="media-left media-middle">#}
+                    {#                      <a href="javascript:void(0)">#}
+                    {#                        <img class="media-object media-object-circle" src="https://agmstudio.io/themes/material-style/2.4.4/assets/img/demo/p75.jpg" alt="...">#}
+                    {#                      </a>#}
+                    {#                    </div>#}
+                    {#                    <div class="media-body">#}
+                    {#                      <h4 class="media-heading"><a href="javascript:void(0)">Labore ut esse Duis consectetur expedita cumque ullamco ad dolor veniam velit</a></h4>#}
+                    {#                      <div class="media-footer">#}
+                    {#                        <span><i class="zmdi zmdi-time color-info-light"></i> August 18, 2016</span>#}
+                    {#                        <span><i class="zmdi zmdi-folder-outline color-warning-light"></i> <a href="javascript:void(0)">News</a></span>#}
+                    {#                      </div>#}
+                    {#                    </div>#}
+                    {#                  </div>#}
+                    {#                  <div class="media">#}
+                    {#                    <div class="media-left media-middle">#}
+                    {#                      <a href="javascript:void(0)">#}
+                    {#                        <img class="media-object media-object-circle" src="https://agmstudio.io/themes/material-style/2.4.4/assets/img/demo/p75.jpg" alt="...">#}
+                    {#                      </a>#}
+                    {#                    </div>#}
+                    {#                    <div class="media-body">#}
+                    {#                      <h4 class="media-heading"><a href="javascript:void(0)">voluptates deserunt ducimus expedita cumque quaerat molestiae labore</a></h4>#}
+                    {#                      <div class="media-footer">#}
+                    {#                        <span><i class="zmdi zmdi-time color-info-light"></i> August 18, 2016</span>#}
+                    {#                        <span><i class="zmdi zmdi-folder-outline color-warning-light"></i> <a href="javascript:void(0)">Productivity</a></span>#}
+                    {#                      </div>#}
+                    {#                    </div>#}
+                    {#                  </div>#}
+                    {#                </div>#}
+                    {#              </div>#}
+                </div>
+                <div id="middle_block" class="col-lg-3 col-md-5 ms-footer-col ms-footer-text-right">
+                    <div class="ms-footbar-block">
+                        <div class="ms-footbar-title">
+                            <img class="ms-logo-sm mb-2 mt-2 animated animated zoomInLeft animation-delay-2"
+                                 src="{{ logo }}"
+                                 style="width: 70px;">
+                            <h3 class="no-m ms-site-title"> {{ Brand_Name }} </h3>
+                        </div>
+                        <address class="no-mb">
+                            {% for item in Contact['Page'].Address %}
+                                <p>
+                                    <i class="color-{{ Contact['Page'].Address[item].color }}-light {{ Contact['Page'].Address[item].icon }} mr-1"></i>
+                                    {% if item == 'eMail' %}
+                                        <a href="mailto:{{ Contact['Page'].Address[item].label }}">{{ Contact['Page'].Address[item].label }}</a>
+                                    {% else %}
+                                        {{ Contact['Page'].Address[item].label }}
+                                    {% endif %}
+                                </p>
+                            {% endfor %}
+                        </address>
+                    </div>
+                    <!--Social Media-->
+                    {#              <div class="ms-footbar-block">#}
+                    {#                <h3 class="ms-footbar-title">Social Media</h3>#}
+                    {#                <div class="ms-footbar-social">#}
+                    {#                  <a href="javascript:void(0)" class="btn-circle btn-facebook"><i class="zmdi zmdi-facebook"></i></a>#}
+                    {#                  <a href="javascript:void(0)" class="btn-circle btn-twitter"><i class="zmdi zmdi-twitter"></i></a>#}
+                    {#                  <a href="javascript:void(0)" class="btn-circle btn-youtube"><i class="zmdi zmdi-youtube-play"></i></a><br>#}
+                    {#                  <a href="javascript:void(0)" class="btn-circle btn-google"><i class="zmdi zmdi-google"></i></a>#}
+                    {#                  <a href="javascript:void(0)" class="btn-circle btn-instagram"><i class="zmdi zmdi-instagram"></i></a>#}
+                    {#                  <a href="javascript:void(0)" class="btn-circle btn-github"><i class="zmdi zmdi-github"></i></a>#}
+                    {#                </div>#}
+                    {#              </div>#}
+                    <!--Social Media-->
+                </div>
+            </div>
+        </div>
+    </aside>
+    <footer class="ms-footer">
+        <div class="container">
+            <p>Copyright © Master Mind 2019</p>
+        </div>
+    </footer>
+    <div class="btn-back-top">
+        <a href="#" data-scroll="" id="back-top" class="btn-circle btn-circle-primary btn-circle-sm btn-circle-raised "><i class="zmdi zmdi-long-arrow-up"></i></a>
+    </div>
+</div>
+
+
+{% assets "site_js" %}
+    <!-- Scripts -->
+    <script {# async defer #} type="text/javascript" src="{{ ASSET_URL }}" charset="utf-8"></script>
+{% endassets %}
+
+{#    <script>
+        Snackbar.show({
+            text: "{{ Message['alert'].Text }}",
+            pos: 'top-right',
+            actionText: 'отправлено',
+            actionTextColor: '#0FB14D',
+        });
+    </script>
+#}
+
+<!-- Scripts -->
+
+</body>
+</html>

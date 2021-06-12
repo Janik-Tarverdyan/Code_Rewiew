@@ -1,0 +1,20 @@
+{% extends "site/base/header.html" %}
+{% import "site/base/components/sections.html" as section %}
+
+{% block title %}
+   Job: {{ Title }}
+{% endblock title %}
+
+{% block components %}
+    {{ section.Header(
+                        Mode = 'Portfolio',
+                        Data = Info['Portfolio'],
+                        Job_Name = Title
+                    )
+    }}
+    {{ section.Portafolio_item(
+                                Data = Info['Portfolio'],
+                                Job_Name = Title
+                              )
+    }}
+{% endblock %}

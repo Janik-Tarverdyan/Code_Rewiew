@@ -1,0 +1,116 @@
+/*.ms-navbar .navbar-collapse*/
+/*.navbar-nav .nav-item > a > i,*/
+/*.ms-lead-navbar .navbar-collapse*/
+/*.navbar-nav .nav-item > a > i {*/
+/*margin-left: auto !important*/
+/*}*/
+
+
+#Header_Slider_icon {
+  font-size: 35px;
+  padding-top: 12px;
+}
+
+#m_menu {
+  display: none;
+}
+
+#btn_send_message {
+  font-size: 15px;
+}
+
+#contact-title {
+  padding-top: 28px;
+  font-size: 30px;
+}
+
+.ms-navbar.navbar .container .btn-navbar-menu {
+  display: none;
+}
+
+#service-list li {
+  margin-bottom: 0;
+  padding: 10px 0px 15px 60px;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.btn{
+  border-radius: 4px;
+}
+
+#Logo_Icon{
+  font-size: 150px;
+  color: white;
+}
+
+#ms-site-title {
+    padding-top: 0;
+    font-size: 55px;
+}
+
+#ms-logo-lg {
+  width: 200px;
+  /*padding-top: 60px;*/
+}
+
+.ms-site-title {
+  padding-top: 32px;
+  font-size: 25px;
+}
+
+.ms-header .ms-title h1{
+  font-size: 40px;
+}
+
+.ms-header .ms-title img {
+  /*margin: 15px 0px 0 0;*/
+}
+
+.ms-slidebar .ms-slidebar-header .ms-slidebar-title .ms-slidebar-t {
+  margin-left: 45px;
+}
+
+#brand {
+  padding-top: 28px;
+  font-size: 40px;
+}
+
+#ms-navbar{
+  margin-right: 0;
+}
+
+#brand_logo {
+  width: 80px;
+}
+
+.ms-title {
+  margin-top: -20px;
+}
+
+#logo {
+  width: 80px;
+  font-size: 30px;
+  margin-top: 21px;
+  margin-left: -5px;
+}
+
+@media all and (max-width: 767px) {
+  .ms-navbar.navbar .container .btn-navbar-menu {
+    display: block;
+  }
+  .ms-slidebar .ms-slidebar-header .ms-slidebar-title h3 {
+    margin-left: 0px;
+    margin-top: 15px;
+  }
+  /*.ms-footbar {*/
+  /*  display: none;*/
+  /*}*/
+}
+@media all and (max-width: 991px) {
+  #middle_block {
+    display: none;
+  }
+}

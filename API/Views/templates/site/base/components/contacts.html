@@ -1,0 +1,165 @@
+{% macro Show(
+            Mode = '',
+            Action = '',
+            Method = '',
+            Data = {}
+) -%}
+    {% if Mode == 'Page' %}
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8 col-lg-7">
+                    <div class="card card-primary animated fadeInUp animation-delay-7">
+                        <div class="ms-hero-bg-primary ms-hero-img-mountain">
+                            <h2 class="text-center no-m pt-4 pb-4 color-white index-1">{{ Data.Form.Title }}</h2>
+                        </div>
+                        <div class="card-body">
+                            <form action="{{ Action }}" method="{{ Method }}" class="form-horizontal">
+                                <fieldset class="container">
+                                    {% for item in Data['Form'].input %}
+                                        {% if Data['Form'].input[item].type != 'textarea' %}
+                                        <div class="form-group row is-empty">
+                                            <label for="input{{ Data['Form'].input[item].name }}"
+                                                   autocomplete="false"
+                                                   class="col-lg-2 control-label">{{ Data['Form'].input[item].label }}</label>
+                                            <div class="col-lg-9">
+                                                <input required
+                                                       type="{{ Data['Form'].input[item].type }}"
+                                                       name="{{ Data['Form'].input[item].name }}"
+                                                       class="form-control"
+                                                       id="input{{ Data['Form'].input[item].name }}"
+                                                       placeholder="{{ Data['Form'].input[item].placeholder }}"
+                                                       autocomplete="off">
+                                            </div>
+                                        </div>
+                                    {% elif Data['Form'].input[item].type == 'textarea' %}
+                                        <div class="form-group row is-empty">
+                                            <label for="textArea" class="col-lg-2 control-label">{{ Data['Form'].input[item].label }}</label>
+                                            <div class="col-lg-9">
+                                                <textarea   required
+                                                            class="form-control"
+                                                            name="{{ Data['Form'].input[item].name }}"
+                                                            rows="7"
+                                                            id="textArea"
+                                                            placeholder="{{ Data['Form'].input[item].placeholder }}"></textarea>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    {% endfor %}
+                                    <div class="form-group row justify-content-end">
+                                        <div class="col-lg-12 text-center">
+                                            <button name="submit" value="Contact_US" id="btn_send_message" type="submit" class="btn btn-raised btn-primary col-lg-4">{{ Data['Form'].Button_label }}</button>
+                                        </div>
+                                    </div>
+{#                                    <div class="form-group row is-empty">#}
+{#                                        <label for="inputEmail" autocomplete="false" class="col-lg-2 control-label">Email</label>#}
+{#                                        <div class="col-lg-9">#}
+{#                                            <input type="email" required name="eMail" class="form-control" id="inputEmail" placeholder="Email">#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="form-group row is-empty">#}
+{#                                        <label for="inputEmail" required autocomplete="false" class="col-lg-2 control-label">Subject</label>#}
+{#                                        <div class="col-lg-9">#}
+{#                                            <input type="text" required name="Subject" class="form-control" id="inputSubject" placeholder="Subject">#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="form-group row is-empty">#}
+{#                                        <label for="textArea" class="col-lg-2 control-label">Message</label>#}
+{#                                        <div class="col-lg-9">#}
+{#                                            <textarea class="form-control" required name="Message" rows="3" id="textArea" placeholder="Your message..."></textarea>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="form-group row justify-content-end">#}
+{#                                        <div class="col-lg-12 text-center">#}
+{#                                            <button id="btn_send_message" type="submit" class="btn btn-raised btn-primary col-lg-4">{{ Data['Form'].Button_label }}</button>#}
+{#                                        </div>#}
+{#                                    </div>#}
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-5">
+                    <div class="card card-primary animated fadeInUp animation-delay-7">
+                        <div class="card-body">
+                            <div class="text-center mb-2">
+                                {# <span class="ms-logo ms-logo-sm mr-1">M</span> #}
+                                <img class="ms-logo-sm mb-2 mt-2 animated animated zoomInLeft animation-delay-2"
+                                     src="/static/site/Master_Mind/img/logo_pink.png"
+                                     style="width: 70px;">
+                                <h3 id="contact-title" class="no-m ms-site-title">{{ Data.Brand }}</h3>
+                            </div>
+                            <address class="no-mb">
+                                {% for item in Data.Address %}
+                                <p>
+                                    <i class="color-{{ Data.Address[item].color }}-light {{ Data.Address[item].icon }} mr-1"></i>
+                                    {% if item == 'eMail' %}
+                                        <a href="mailto:{{ Data.Address[item].label }}">{{ Data.Address[item].label }}</a>
+                                    {% else %}
+                                        {{ Data.Address[item].label }}
+                                    {% endif %}
+                                </p>
+                                {% endfor %}
+                            </address>
+                        </div>
+                    </div>
+                    <div class="card card-primary animated fadeInUp animation-delay-7">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="zmdi zmdi-map"></i>Map</h3>
+                        </div>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48342.06480344582!2d-73.980069429762!3d40.775680208459505!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2589a018531e3%3A0xb9df1f7387a94119!2sCentral+Park!5e0!3m2!1sen!2sus!4v1491233314840" width="100%" height="340"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% elif Mode == 'Form' %}
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8 col-lg-7">
+                    <div class="card card-primary animated fadeInUp animation-delay-7">
+
+                        <div class="ms-hero-bg-primary ms-hero-img-mountain">
+                            <h2 class="text-center no-m pt-4 pb-4 color-white index-1">Contact</h2>
+                        </div><div class="card-body">
+                        <form action="{{ Action }}" class="form-horizontal" _lpchecked="1">
+                            <fieldset class="container">
+                                <div class="form-group row is-empty">
+                                    <label for="inputEmail" autocomplete="false" class="col-lg-2 control-label">Name</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control" id="input_Name" placeholder="Name"
+                                               style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAAPhJREFUOBHlU70KgzAQPlMhEvoQTg6OPoOjT+JWOnRqkUKHgqWP4OQbOPokTk6OTkVULNSLVc62oJmbIdzd95NcuGjX2/3YVI/Ts+t0WLE2ut5xsQ0O+90F6UxFjAI8qNcEGONia08e6MNONYwCS7EQAizLmtGUDEzTBNd1fxsYhjEBnHPQNG3KKTYV34F8ec/zwHEciOMYyrIE3/ehKAqIoggo9inGXKmFXwbyBkmSQJqmUNe15IRhCG3byphitm1/eUzDM4qR0TTNjEixGdAnSi3keS5vSk2UDKqqgizLqB4YzvassiKhGtZ/jDMtLOnHz7TE+yf8BaDZXA509yeBAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%; cursor: auto;" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="form-group row is-empty">
+                                    <label for="inputEmail" autocomplete="false" class="col-lg-2 control-label">Email</label>
+                                    <div class="col-lg-9">
+                                        <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="form-group row is-empty">
+                                    <label for="inputEmail" autocomplete="false" class="col-lg-2 control-label">Subject</label>
+                                    <div class="col-lg-9">
+                                        <input type="text" class="form-control" id="inputSubject" placeholder="Subject">
+                                    </div>
+                                </div>
+                                <div class="form-group row is-empty">
+                                    <label for="textArea" class="col-lg-2 control-label">Message</label>
+                                    <div class="col-lg-9">
+                                        <textarea class="form-control" rows="3" id="textArea" placeholder="Your message..."></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row justify-content-end">
+                                    <div class="col-lg-10">
+                                        <button type="submit" class="btn btn-raised btn-primary">Send Message</button>
+{#                                        <button type="button" class="btn btn-danger">Cancel</button>#}
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    {% endif %}
+{% endmacro %}

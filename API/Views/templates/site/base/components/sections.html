@@ -1,0 +1,1271 @@
+{# Section Header #}
+{% macro Header(
+			  Mode='',
+			  Category = '',
+			  item = '',
+			  Job_Name = '',
+			  material_background = 'off',
+			  Data={}
+) -%}
+	{% if Mode == 'Slider' %}
+		<div class="ms-hero ms-hero-material">
+			<span class="ms-hero-bg"></span>
+			<div class="container">
+				<div class="row">
+					<div class="col-xl-6 col-lg-7">
+						<div id="carousel-hero" class="carousel slide carousel-fade" data-ride="carousel" data-interval="15000">
+							<!-- Wrapper for slides -->
+							<div class="carousel-inner" role="listbox">
+								{% for item in Data %}
+									<div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+										<div class="carousel-caption">
+											<div class="ms-hero-material-text-container">
+												<header class="ms-hero-material-title animated slideInLeft animation-delay-{{ loop.index ++4 }}">
+													<h1 class="animated fadeInLeft animation-delay-3 font-smoothing">
+														{{ Data[item].Title }}
+													</h1>
+													<h2 class="animated fadeInLeft animation-delay-17">
+														{{ Data[item].Sub_Title }}
+													</h2>
+												</header>
+												<ul
+                                                        class="ms-hero-material-list">
+													{% for desc in Data[item].Description %}
+														<li class="">
+															<div class="ms-list-icon animated zoomInUp animation-delay-{{ loop.index ++2 }}">
+																<span class="ms-icon ms-icon-circle ms-icon-xlg color-{{ Data[item].Description[desc].type }} shadow-3dp">
+																  <i id="Header_Slider_icon-no" class="{{ Data[item].Description[desc].icon }}"></i>
+																</span>
+															</div>
+															<div class="ms-list-text animated fadeInRight animation-delay-{{ loop.index ++2 }}">
+																{{ Data[item].Description[desc].text }}
+															</div>
+														</li>
+													{% endfor %}
+												</ul>
+												{% if not Data[item].Button %} <br> {% endif %}
+												<div class="ms-hero-material-buttons text-right">
+													<div class="ms-hero-material-buttons text-right">
+														{% for btn in Data[item].Button %}
+															<a  href="{{ Data[item].Button[btn].url }}"
+																class="btn btn-{{ Data[item].Button[btn].type }} btn-raised
+																animated fadeIn{{ Data[item].Button[btn].position }}
+																animation-delay-{{ loop.index ++2 }} mr-2">
+																<i class="{{ Data[item].Button[btn].icon }}"></i>
+																{{ Data[item].Button[btn].label }}
+															</a>
+														{% endfor %}
+
+													</div>
+												</div>
+											</div> <!-- ms-hero-material-text-container -->
+										</div>
+									</div>
+								{% endfor %}
+								<div class="carousel-controls">
+									<!-- Controls -->
+									<a class="left carousel-control animated zoomIn animation-delay-10" href="#carousel-hero" role="button" data-slide="prev">
+										<i class="zmdi zmdi-chevron-left"></i>
+										<span class="sr-only">Previous</span>
+									</a>
+									<a class="right carousel-control animated zoomIn animation-delay-10" href="#carousel-hero" role="button" data-slide="next">
+										<i class="zmdi zmdi-chevron-right"></i>
+										<span class="sr-only">Next</span>
+									</a>
+									<!-- Indicators -->
+									<ol class="carousel-indicators">
+										{% for item in Data %}
+											<li data-target="#carousel-hero"
+												data-slide-to="{{ loop.index }}"
+												class="animated fadeInUpBig animation-delay-10
+						  {% if loop.index == 1 %}
+						  active
+						  {% endif %}">
+											</li>
+										{% endfor %}
+									</ol>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-xl-6 col-lg-5">
+						<div class="ms-hero-img animated zoomInUp animation-delay-10">
+							<img src="https://agmstudio.io/themes/material-style/2.4.4/assets/img/demo/mock-imac-material2.png" alt="" class="img-fluid">
+							<div id="carousel-hero-img" class="carousel carousel-fade slide" data-ride="carousel" data-interval="3000">
+								<!-- Indicators -->
+								<ol class="carousel-indicators carousel-indicators-hero-img">
+									<li data-target="#carousel-hero-img" data-slide-to="0" class="active"></li>
+								</ol>
+								<!-- Indicators -->
+								<!-- Wrapper for slides -->
+								<div class="carousel-inner" role="listbox">
+									<div class="ms-hero-img-slider carousel-item active ">
+										<img src="https://agmstudio.io/themes/material-style/2.4.4/assets/img/demo/hero2.png" alt="" class="img-fluid">
+									</div>
+								</div>
+								<!-- Wrapper for slides -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> <!-- container -->
+		</div>
+    {% elif Mode == 'Portfolio' %}
+        <div class="ms-hero-page mb-6 ms-hero-bg-primary ms-hero-img-coffee">
+            <h2 class="text-center no-m pt-4 pb-4 color-white index-1">{{ Data['items'][Job_Name]['Title'] }}</h2>
+            <p class="lead color-white index-1 text-center container">{{ Data['items'][Job_Name]['Short_Description'] }}</p>
+        </div>
+	{% elif Mode == 'Basic' %}
+        {% if material_background == 'off' %}
+		<header class="ms-hero-page-override ms-hero-bg-primary ms-hero-img-city">
+			<div class="container">
+				<div class="text-center">
+                    {% if Data.logo_img %}
+					<img id="ms-logo-lg"
+						 class="ms-logo-lg ms-logo-white center-block mb-2 mt-2 animated zoomInLeft animation-delay-2"
+						 src="{{ Data.logo_img }}">
+                    {% elif Data.logo_icon %}
+                        <i id="Logo_Icon" class="{{ Data[Category][item].logo_icon }}"></i>
+                    {% endif %}
+					<h1 id="ms-site-title" class="no-m ms-site-title color-white center-block ms-site-title-lg mt-2 animated zoomInDown animation-delay-5">
+						{{ Data.Title }}
+					</h1>
+					{{ Data.Description }}
+				</div>
+			</div>
+		</header>
+        {% elif material_background == 'on' %}
+        <div    {% if Data[Category]["Background"] %}
+                style="background: {{ Data[Category]["Background"] }} !important"
+                        {#'https://i.pinimg.com/originals/1a/8d/6e/1a8d6ec9fc8efb115f75faddd688bafd.jpg'#}
+                        {#'https://t4.ftcdn.net/jpg/00/40/66/63/500_F_40666378_cduwM8jbBOKeOeDLVWWn4k6XBjiAXvJz.jpg'#}
+                        {#'http://oscargamezcpa.com/wp-content/uploads/2016/01/slidebar3.jpg'#}
+                {% endif %}
+                class="material-background bg-primary "></div>
+        {% endif %}
+	{% endif %}
+{% endmacro %}
+{# Section Header #}
+
+
+{# Section Services #}
+{% macro Services(
+				  Mode = '',
+				  Data = {}
+) -%}
+	{% if Mode == 'Basic' %}
+		<div class="container mt-4">
+			<h2 class="text-center color-primary mb-2 wow fadeInDown animation-delay-4"
+				style="visibility: visible; animation-name: fadeInDown;">
+				{{ Data.Title }}
+			</h2>
+			<p  class="lead text-center aco wow fadeInDown animation-delay-5 mw-800 center-block mb-4"
+				style="visibility: visible; animation-name: fadeInDown;">
+				{{ Data.Description }}
+			</p>
+			<div class="row">
+				{% for item in Data %}
+					{% if loop.index >= 3 %}
+						<div  class="ms-feature col-xl-3 col-lg-6 col-md-6 card wow flipInX animation-delay-{{ loop.index ++4 }}"
+							  style="visibility: visible; animation-name: flipInX;">
+							<div class="text-center card-body">
+		  <span class="ms-icon ms-icon-circle ms-icon-xxlg color-{{ Data[item].Type }}">
+			<i class="zmdi zmdi-{{ Data[item].Action.icon }}"></i></span>
+								<h4 class="color-{{ Data[item].Type }}">{{ Data[item].Title }}</h4>
+								<p class="">{{ Data[item].Description }}</p>
+								<a href="{{ Data[item].Action.url }}" class="btn btn-info btn-raised">{{ Data[item].Action.label }}</a>
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	{% elif Mode == 'Basic_Wide' %}
+		<div class="container mt-6">
+			<h2 class="text-center color-primary mb-2 wow fadeInDown animation-delay-4"
+				style="visibility: visible; animation-name: fadeInDown;">
+				{{ Data.Title }}
+			</h2>
+			<p  class="lead text-center aco wow fadeInDown animation-delay-4 mw-800 center-block mb-4"
+				style="visibility: visible; animation-name: fadeInDown;">{{ Data.Description }}</p>
+			<div class="row">
+				{% for item in Data %}
+{#					{% if loop.index >= 3 %}#}
+						<div class="col-xl-3 col-lg-6 col-md-6">
+							<div  class="card card-{{ Data[item].Type }}-inverse wow fadeInUp animation-delay-{{ loop.index ++3 }}"
+								  style="visibility: visible; animation-name: fadeInUp;">
+								<div class="text-center card-body">
+                                    <span class="ms-icon ms-icon-circle ms-icon-white ms-icon-inverse ms-icon-xxlg ">
+                                      <i class="zmdi zmdi-{{ Data[item].icon  }}"></i>
+                                    </span>
+									<h4 class="">{{ Data[item].Title }}</h4>
+									<p class="">{{ Data[item].Description }}</p>
+                                    {% for btn in Data[item].Button %}
+									<a href="{{ Data[item].Button[btn].url }}" class="btn btn-white color-{{ Data[item].Type }} btn-raised"> {{ Data[item].Title }} </a>
+                                    {% endfor %}
+								</div>
+							</div>
+						</div>
+{#					{% endif %}#}
+				{% endfor %}
+			</div>
+		</div>
+	{% elif Mode == 'Advance' %}
+		<div class="container mt-6">
+			<div class="text-center mw-800 center-block mb-4">
+				<h2 class="color-primary wow fadeInDown animation-delay-4" style="visibility: visible; animation-name: fadeInDown;">{{ Data.Title }}</h2>
+				<p class="lead wow fadeInDown animation-delay-4" style="visibility: visible; animation-name: fadeInDown;">{{ Data.Description }}</p>
+			</div>
+			<div class="row">
+				{% for item in Data %}
+					{% if loop.index >= 3 %}
+						<div class="col-xl-3 col-lg-3 col-md-6">
+							<div class="card card-{{ Data[item].Type }} wow zoomInUp animation-delay-{{ loop.index ++1 }}" style="visibility: visible; animation-name: zoomInUp;">
+								<div class="bg-{{ Data[item].Type }}">
+									<img src="{{ Data[item].Image }}" alt="..." class="img-avatar-circle">
+								</div>
+								<div class="card-body pt-4 text-center">
+									<h4 class="color-{{ Data[item].Type }}">{{ Data[item].Title }}</h4>
+									<p>{{ Data[item].Description }}</p>
+									{% for btn in Data[item].Button %}
+										<a href="{{ Data[item].Button[btn].url }}" class="btn btn-{{ Data[item].Type }}">
+											<i class="{{ Data[item].Button[btn].icon }}"></i>&nbsp;
+											{{ Data[item].Button[btn].label }}
+											<div class="ripple-container"></div>
+										</a>
+									{% endfor %}
+								</div>
+							</div>
+						</div>
+					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+        {% elif Mode == 'Description' %}
+        <div class="container">
+            <section class="mb-4">
+{#                <h2 class="text-center no-mt mb-6 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">{{ Data.Title }}</h2>#}
+                <div class="row">
+                    {% for service in Data %}
+                        {% if loop.index > 1 %}
+                            <div class="col-lg-4 col-md-6 col-sm-6 mb-2">
+                                <div class="ms-icon-feature wow flipInX animation-delay-{{ loop.index ++4 }}" style="visibility: visible; animation-name: flipInX;">
+                                    <div class="ms-icon-feature-icon">
+                                      <span style=" font-size: 33px;
+                                                    border-radius: 11px;
+                                                    box-shadow: 4px 6px 8px #9c27b0cc;
+                                                    " class="ms-icon ms-icon-lg {#ms-icon-inverse#}">
+                                          <i class="{{ Data[service].icon }}"></i>
+                                      </span>
+                                    </div>
+                                        <div class="ms-icon-feature-content">
+                                            <h4 style="font-size: 24px;" class="color-primary"><a href="{{ Data[service].href }}">{{ Data[service].Title }}</a></h4>
+                                            <p>{{ Data[service].Description }}</p>
+                                            {% for action in Data[service]['Buttons'] %}
+{#                                                <div class="text-right">#}
+                                                    <a href="{{ Data[service]['Buttons'][action].href }}"
+                                                       class="btn btn-primary btn-block">
+                                                        <i class="{{ Data[service].icon }} color-primary"></i>
+                                                        {{ Data[service]['Buttons'][action].label }}
+                                                        <div class="ripple-container"></div>
+                                                    </a>
+{#                                                </div>#}
+                                            {% endfor %}
+                                        </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </section>
+      </div>
+	{% endif %}
+{% endmacro %}
+{# Section Services #}
+
+
+
+{# Section Info #}
+{% macro Info(
+			  Mode='',
+			  Service = '',
+			  material_background = 'on',
+			  Data={}
+) -%}
+	{% if Mode == 'Basic' %}
+		<div class="wrap wrap-mountain mt-6">
+			<div class="container">
+				<h2 class="text-center text-light mb-6 wow fadeInDown animation-delay-5"
+					style="visibility: visible; animation-name: fadeInDown;">
+					{{ Data.Title }}
+				</h2>
+				<div class="row">
+					<div class="col-lg-6 order-lg-2 mb-4  center-block">
+						<img  src="{{ Data.Image }}" alt=""
+							  class="img-fluid center-block wow zoomIn animation-delay-12"
+							  style="visibility: visible; animation-name: zoomIn;">
+					</div>
+					<div class="col-lg-6 order-lg-1 pr-6">
+						{% for item in Data.Text %}
+							<p  class="wow fadeInLeft animation-delay-{{ loop.index ++2 }}"
+								style="visibility: visible; animation-name: fadeInLeft;">
+								{{ Data.Text[item] }}
+							</p>
+						{% endfor %}
+						<div class="text-right">
+							{% for btn in Data.Button %}
+								<a  href="{{ Data.Button[btn].url }}"
+									class="btn btn-{{ Data.Button[btn].type }} btn-raised mr-1 wow flipInX animation-delay-{{ loop.index ++4 }}"
+									style="visibility: visible; animation-name: flipInX;">
+									<i class="{{ Data.Button[btn].icon }}"></i> {{ Data.Button[btn].label }} </a>
+							{% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	{% elif Mode == 'Description' %}
+		<section class="wrap ms-hero-img-road ms-hero-bg-royal ms-bg-fixed color-white">
+			<div class="container">
+				<div class="text-center mb-4">
+					<h2><span class="text-normal">{{ Data.Title }}</span></h2>
+				</div>
+				<div class="row">
+					<div class="col-lg-6">
+						<h3 class="wow fadeInUp animation-delay-2" style="visibility: visible; animation-name: fadeInUp;">{{ Data['Paragraph'].Title }}</h3>
+						{% for item in Data['Paragraph'].Text %}
+							<p class="wow dropcaps fadeInUp animation-delay-3" style="visibility: visible; animation-name: fadeInUp;">{{ Data['Paragraph'].Text[item] }}</p>
+						{% endfor %}
+					</div>
+
+					<div class="col-lg-6">
+						<h3 class="wow fadeInUp animation-delay-2" style="visibility: visible; animation-name: fadeInUp;">{{ Data['Advantage'].Title }}</h3>
+						<div class="ms-collapse" id="accordion2" role="tablist" aria-multiselectable="true">
+							{% for item in Data.Advantage['items'] %}
+								<div class="mb-0 card card-primary wow fadeInUp animation-delay-2" style="visibility: visible; animation-name: fadeInUp;">
+									<div class="card-header" role="tab" id="heading{{ Data.Advantage['items'][item].id }}2">
+										<h4 class="card-title">
+											<a class="withripple collapsed"
+											   role="button"
+											   data-toggle="collapse"
+											   href="#collapse{{ Data.Advantage['items'][item].id }}2"
+											   aria-expanded="false"
+											   aria-controls="collapse{{ Data.Advantage['items'][item].id }}2">
+												<i class="fa fa-{{ Data.Advantage['items'][item].icon }}"></i> &nbsp; {{ Data.Advantage['items'][item].title }}  </a>
+										</h4>
+									</div>
+									<div id="collapse{{ Data.Advantage['items'][item].id }}2"
+										 class="card-collapse collapse"
+										 role="tabpanel"
+										 aria-labelledby="heading{{ Data.Advantage['items'][item].id }}2"
+										 data-parent="#accordion2"
+									>
+										<div class="card-body color-dark">
+											{% for paragraph in Data.Advantage['items'][item].description %}
+												<p>{{ Data.Advantage['items'][item].description[paragraph] }}</p>
+											{% endfor %}
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+	{% elif Mode == 'Advance' %}
+		<div class="container mt-6">
+			<h1 class="font-light">{{ Data.Title }}</h1>
+			<p class="lead color-primary">— {{ Data.Description }} </p>
+			<div class="panel panel-light panel-flat">
+				<!-- Nav tabs -->
+				<ul class="nav nav-tabs nav-tabs-transparent
+				            indicator-primary nav-tabs-full
+				            nav-tabs-5"
+                    role="tablist">
+					{% for item in Data %}
+						{% if loop.index > 2 %}
+							<li class="nav-item wow fadeInDown animation-delay-4"
+                                role="presentation"
+                                style="visibility: visible; animation-name: fadeInDown;">
+								<a href="#{{ Data[item].id }}"
+								   aria-controls="{{ Data[item].id }}"
+								   role="tab"
+								   data-toggle="tab"
+								   class="nav-link withoutripple {% if loop.index == 3 %}active{% endif %}"
+								   aria-selected="{% if loop.index == 3 %} true {% endif %}">
+									{% if 'linux' == Data[item].icon %}
+										<i class="fab fa-{{ Data[item].icon }}"></i>
+									{% else %}
+										<i class="zmdi zmdi-{{ Data[item].icon }}"></i>
+									{% endif %}
+									<span class="d-none d-md-inline">{{ Data[item].Name }}</span>
+								</a>
+							</li>
+						{% endif %}
+					{% endfor %}
+
+					<span id="i3" class="" style="left: 222px; width: 222px;"></span>
+				</ul>
+				<div class="panel-body">
+					<!-- Tab panes -->
+					<div class="tab-content mt-4">
+						{% for item in Data %}
+							{% if loop.index > 2 %}
+								<div role="tabpanel"
+									 class="tab-pane fade {% if loop.index == 3 %} active show {% endif %}"
+									 id="{{ Data[item].id }}"
+								>
+									<div class="row">
+										<div class="col-lg-6 order-lg-{{ loop.index }}">
+											<img src="{{ Data[item].image }}" alt=""
+												 class="img-fluid wow  zoomIn animation-delay-4" style="visibility: visible; animation-name: zoomIn;">
+										</div>
+										<div class="col-lg-6 order-lg-{{ loop.revindex }}">
+											<h3 class="text-normal wow  fadeInUp animation-delay-2" style="visibility: visible; animation-name: fadeInUp;">
+												{{ Data[item].title }}
+											</h3>
+											{% for paragraph in Data[item].text %}
+												<p class="lead lead-md wow  fadeInUp animation-delay-3" style="visibility: visible; animation-name: fadeInUp;">
+													{{ Data[item].text[paragraph] }}
+												</p>
+											{% endfor %}
+											<div class="">
+												{% for btn in Data[item].button %}
+													<a href="{{ Data[item].button[btn].url }}"
+													   class="btn btn-{{ Data[item].button[btn].type }} btn-raised wow zoomIn animation-delay-4" style="visibility: visible; animation-name: zoomIn;">
+														<i class="zmdi zmdi-{{ Data[item].button[btn].icon }}"></i>
+														{{ Data[item].button[btn].label }}
+													</a>
+												{% endfor %}
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div> <!-- panel -->
+		</div>
+
+	{% elif Mode == 'Article' %}
+		<div class="container">
+			<div class="card jumbotron card-hero animated slideInUp animation-delay-4 mb-6 wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+				<div class="card-body card-body-big">
+					<h1 class="text-center fw-500">{{ Data.Title }}</h1>
+					<p class="lead text-center center-block mw-800">{{ Data.Description }}</p>
+					<div class="row mt-4">
+						<div class="col-lg-6 order-lg-2 text-justify">
+							<h3 class="color-primary">Знай нас</h3>
+							{% for text in Data.Paragraph %}
+								<p {% if loop.index == 1 %}class="dropcaps"{% endif %}>{{ Data.Paragraph[text] }}</p>
+							{% endfor %}
+						</div>
+						<div class="col-lg-6 order-lg-1">
+							<h3 class="color-primary">{{ Data.Principles.Title }}</h3>
+							<ol id="service-list" class="service-list list-unstyled">
+								{% for item in Data.Principles['items'] %}
+									<li><h4 class="fw-400"> {{ Data.Principles['items'][item] }} </h4>{# <span>{{ Data.Principles['items'][item].description }}</span>#}</li>
+								{% endfor %}
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	{% elif Mode == 'Article_View' %}
+		<div class="container wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+			<div class="row">
+				<div class="col-lg-6 text-justify">
+					<h2 class="color-primary right-line">{{ Data.Title }}</h2>
+					{% for item in Data.Paragraph %}
+						<p{% if loop.index == 1 %} class="dropcaps" {% endif %}>{{ Data.Paragraph[item] }}</p>
+					{% endfor %}
+					<p class="text-right">
+						<cite class="lead color primary-color">— {{ Data.Author }}</cite>
+					</p>
+				</div>
+				<div class="col-lg-6">
+					<h2 class="color-primary right-line">{{ Data.Our_approach.Title }}</h2>
+					<div class="ms-collapse" id="accordion2" role="tablist" aria-multiselectable="true">
+						{% for item in Data.Our_approach['items'] %}
+							<div class="mb-0 card card-primary wow fadeInUp animation-delay-2" style="visibility: visible; animation-name: fadeInUp;">
+								<div class="card-header"
+									 role="tab"
+									 id="heading{{ Data.Our_approach['items'][item].id }}2">
+									<h4 class="card-title">
+										<a class="withripple collapsed"
+										   role="button"
+										   data-toggle="collapse"
+										   href="#collapse{{ Data.Our_approach['items'][item].id }}2"
+										   aria-expanded="false"
+										   aria-controls="collapse{{ Data.Our_approach['items'][item].id }}2">
+											<i class="{{ Data.Our_approach['items'][item].icon }}"></i>&nbsp;
+											{{ Data.Our_approach['items'][item].title }}
+											<div class="ripple-container"></div>
+										</a>
+									</h4>
+								</div>
+								<div id="collapse{{ Data.Our_approach['items'][item].id }}2"
+									 class="card-collapse collapse"
+									 role="tabpanel"
+									 aria-labelledby="heading{{ Data.Our_approach['items'][item].id }}2"
+									 data-parent="#accordion2" style="">
+									<div class="card-body color-dark">
+										{% for text in Data.Our_approach['items'][item].description %}
+											<p>{{ Data.Our_approach['items'][item].description[text] }}</p>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+
+    {% elif Mode == 'Article_Advance' %}
+        <div class="container">
+            <div class="card {% if material_background != 'on' %} card-hero {% endif %} animated slideInUp animation-delay-8 mb-6">
+                <div class="card-body">
+                    <h1 class="color-primary font-big">
+                        {% if Service != '' %}
+                            {{ Data[Service].Title }}
+                        {% endif %}
+                    </h1>
+                    <div class="row">
+                        {% for text in Data[Service]["Texts"] %}
+                        <div class="col-lg-6 text-justify">
+                           {% for paragraph in Data[Service]["Texts"][text] %}
+                            <p {% if text == 'Left' and loop.index == 1 %}class="dropcaps"{% endif %}>
+                                {% if paragraph == 'Numbers' %}
+                                    <ol id="service-list" class="service-list list-unstyled" >
+                                        {% for number in Data[Service]["Texts"][text]['Numbers'] %}
+                                        <li>{{ number }}</li><br>
+                                        {% endfor %}
+                                    </ol>
+                                {% elif paragraph == 'Collaps' %}
+                                    <div class="card">
+                                        <div class="ms-collapse" id="accordion2" role="tablist" aria-multiselectable="true">
+                                            {% for item in Data[Service]["Texts"][text]['Collaps'] %}
+                                                <div class="mb-0 card card-primary wow fadeInUp animation-delay-2"
+                                                     style="visibility: visible; animation-name: fadeInUp;">
+                                                    <div class="card-header"
+                                                         role="tab"
+                                                         id="heading{{ Data[Service]["Texts"][text]['Collaps'][item].id }}2">
+                                                        <h4 class="card-title">
+                                                            <a class="withripple collapsed"
+                                                               role="button"
+                                                               data-toggle="collapse"
+                                                               href="#collapse{{ Data[Service]["Texts"][text]['Collaps'][item].id }}2"
+                                                               aria-expanded="false"
+                                                               aria-controls="collapse{{ Data[Service]["Texts"][text]['Collaps'][item].id }}2">
+                                                                {#<i class="fa fa-{{ Data[Service]["Texts"][text]['Collaps'][item].icon }}"></i> &nbsp;#}
+                                                                {{ Data[Service]["Texts"][text]['Collaps'][item].title }}  </a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapse{{ Data[Service]["Texts"][text]['Collaps'][item].id }}2"
+                                                         class="card-collapse collapse"
+                                                         role="tabpanel"
+                                                         aria-labelledby="heading{{ Data[Service]["Texts"][text]['Collaps'][item].id }}2"
+                                                         data-parent="#accordion2">
+                                                        <div class="card-body color-dark">
+                                                            {% for paragraph in Data[Service]["Texts"][text]['Collaps'][item].description %}
+                                                                <p>{{ Data[Service]["Texts"][text]['Collaps'][item].description[paragraph] }}</p>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    {{ Data[Service]["Texts"][text][paragraph] }}
+                                {% endif %}
+                            </p>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="right-line color-primary">{{ Data[Service]['Services'].Title }}</h2>
+                        </div>
+                        {% for service in Data[Service]['Services'] %}
+                        <div class="col-xl-3 col-md-6">
+                            <div class="card card-info card-flat">
+                                <div class="card-body overflow-hidden text-center">
+                                    <i class="fa fa-rocket color-info font-big"></i>
+                                    <h4 class="color-info">Lorem ipsum dolor</h4>
+                                    <p>Id quam odio voluptates porro harum ducimus non provident, dolor, modi accusantium.</p>
+                                    <a href="javascript:void(0)" class="btn btn-info"><i class="fa fa-rocket"></i> Button</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	{% elif Mode == 'Article_History' %}
+		<div class="container card card-body mt-6 card-body-big wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+			<h1 class="text-center fw-500 mb-6">{{ Data.Title }}</h1>
+			<ul class="ms-timeline-left">
+                {% for history in Data['Histories'] %}
+				<li class="ms-timeline-left-item wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+					<h4>{{ Data['Histories'][history].Sub_Title }}</h4>
+					<div class="ms-timeline-left-left">
+						<h4 class="color-primary">{{ Data['Histories'][history].Title }}</h4>
+						<time class="ms-timeline-left-time">{{ Data['Histories'][history].Year }}</time>
+					</div>
+					<span class="ms-timeline-left-city">{{ Data['Histories'][history].Location_City }}</span>
+					<p>{{ Data['Histories'][history].Description }}</p>
+                    {% if 'ToDo' in Data['Histories'][history] %}
+					<ul>
+                        {% for todo in Data['Histories'][history]['ToDo'] %}
+						<li>{{ Data['Histories'][history]['ToDo'][todo] }}</li>
+                        {% endfor %}
+					</ul>
+                {% endif %}
+				</li>
+                {% endfor %}
+			</ul>
+		</div>
+	{% endif %}
+{% endmacro %}
+{# Section Info #}
+
+
+{# Section FAQ #}
+{% macro FAQ( Data = {} ) -%}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card card-hero animated fadeInUp animation-delay-4">
+					<div class="panel-group ms-collapse no-margin" id="accordion" role="tablist" aria-multiselectable="true">
+						<div class="card card-info">
+							<div class="card-header" role="tab" id="headingOne">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="withripple collapsed" role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number One <div class="ripple-container"></div></a>
+								</h4>
+							</div>
+							<div id="collapseOne" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion" style="">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias delectus laboriosam, ut placeat autem itaque, possimus illum dicta enim quia. Quam similique voluptate illo debitis corrupti sunt, vitae dicta officia impedit hic. Perferendis, odit consequuntur. Numquam doloremque aperiam ut, adipisci molestiae, delectus deleniti accusamus expedita sit suscipit nostrum voluptatem perspiciatis deserunt optio hic nihil distinctio nesciunt. Dolor assumenda repudiandae, tempora magni quidem maiores minima adipisci architecto porro accusamus alias fugit, doloremque fugiat veniam est totam.</p>
+									<h3>Consectetur necessitatibus a cumque</h3>
+									<p>Quos cum sunt temporibus ipsam, voluptatibus cupiditate magnam quam officiis laborum facere ipsa molestiae ratione fugiat iusto perspiciatis dolorem veniam maxime tempore perferendis illum aliquam! Aspernatur quasi possimus rem tempora, facere sed voluptatibus sequi saepe consectetur necessitatibus a cumque fugiat earum error, maxime fugit voluptatum quae minima tenetur reiciendis dolor temporibus labore odit. Quos, ex architecto labore quasi nostrum tempora ipsam id numquam voluptatum, eos, tempore. Delectus, esse! Dolorum ipsam eos nesciunt soluta, voluptatum beatae?</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-info">
+							<div class="card-header" role="tab" id="headingTwo">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Two </a>
+								</h4>
+							</div>
+							<div id="collapseTwo" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" data-parent="#accordion">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati nemo quas veniam fugit quidem, sequi aliquid ad, reiciendis eaque officiis consectetur adipisci similique eum ut dolores illum itaque accusamus quia consequuntur, labore eos maiores! Ea debitis provident cupiditate optio maiores obcaecati rerum, quisquam, ut dolorem quo nemo doloremque architecto esse deleniti voluptates repellendus non neque fuga. Ut commodi nostrum delectus necessitatibus totam, rerum mollitia quas qui facere nihil tempora pariatur illum maiores, quos quasi vero.</p>
+									<h3>Consectetur necessitatibus a cumque</h3>
+									<p>Ex repellendus voluptate sunt quia, error. Libero reiciendis vel nulla inventore iusto, praesentium animi dolorum assumenda doloremque quisquam molestias officiis sequi repellat beatae, odit et fugiat quod, amet incidunt cum placeat voluptates sapiente nemo minima reprehenderit! Ex itaque eligendi quasi qui, repellendus facere quia? Autem culpa, quis officia, assumenda totam odit harum velit beatae, quas facilis numquam. Vel est, totam maiores ea libero accusantium excepturi minima voluptatibus. Similique reiciendis architecto veritatis labore quas fuga nulla.</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-info">
+							<div class="card-header" role="tab" id="headingThree">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Three </a>
+								</h4>
+							</div>
+							<div id="collapseThree" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingThree" data-parent="#accordion">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum dolore voluptates corporis. Sint ullam quidem, alias. Mollitia vero quidem quis numquam id sed magnam temporibus hic atque ad similique possimus aspernatur fuga delectus est, dolorum sunt sapiente blanditiis sequi esse ut nihil repellendus. Quisquam repudiandae ratione quam assumenda, voluptatibus impedit illo eligendi illum architecto soluta tenetur debitis similique ex nam mollitia, dolores vel accusantium. Illum odio eius beatae, enim tenetur dolore voluptatem quos quas. Molestiae!</p>
+									<h3>Consectetur necessitatibus a cumque</h3>
+									<p>Ducimus corporis iste voluptatum. Aliquam quam nisi, est ratione accusantium officia enim, sed nostrum in velit ullam minima temporibus nam earum ipsam molestias ipsa optio architecto! Repellendus, veniam, nobis? Sequi, dignissimos expedita est, accusantium sapiente eveniet repellendus quo animi libero facilis consequuntur, vitae nesciunt explicabo molestias. Nihil architecto magni assumenda quidem quae similique hic, cumque exercitationem voluptatem obcaecati porro! Minima nisi nam ex optio repellendus animi dolores, enim debitis, inventore voluptas commodi nemo praesentium sunt.</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-info">
+							<div class="card-header" role="tab" id="headingFour">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Four </a>
+								</h4>
+							</div>
+							<div id="collapseFour" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingFour" data-parent="#accordion">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias exercitationem qui blanditiis harum itaque perferendis autem, consequatur fugiat deserunt impedit maiores magni, voluptatum, atque, recusandae facere tempore minima facilis! Commodi id dignissimos vel, deleniti officia, eligendi porro asperiores, enim rerum, quibusdam tempora perspiciatis alias voluptatum. Voluptatum facilis, quod aperiam fugiat odio exercitationem labore cupiditate enim quos possimus quasi, inventore adipisci voluptatibus non amet soluta explicabo iste, assumenda vel impedit. Quo eius sit, voluptas consequuntur pariatur.</p>
+									<p>Sed nihil assumenda ad quisquam recusandae aspernatur, veniam amet. Porro quidem rem sed, nulla. Labore accusantium illum non quia consequatur, saepe fuga deleniti cumque ipsum odit temporibus, facere aperiam reiciendis fugit laudantium odio quo maiores maxime debitis! Nihil perspiciatis animi aspernatur, provident ab quis veniam vero ad quisquam reiciendis fugit porro molestiae illum amet commodi quam ipsam, deleniti obcaecati voluptatem in rerum nostrum neque! Eum quisquam iusto suscipit, asperiores laudantium accusamus optio hic rem odit.</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-info">
+							<div class="card-header" role="tab" id="headingFive">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Five </a>
+								</h4>
+							</div>
+							<div id="collapseFive" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingFive" data-parent="#accordion">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste voluptatem placeat nihil. Rerum magnam velit modi, eum eius deleniti fuga ducimus nisi cum assumenda inventore, neque itaque fugiat tempore suscipit magni nobis. Hic consequuntur odit eligendi possimus optio saepe eveniet! Corporis cumque aut quaerat consectetur sunt iure molestiae, repellendus dolore velit odio blanditiis numquam assumenda eius quod ipsam ipsum quibusdam excepturi maxime non, eligendi repudiandae sit repellat, vel? Culpa reprehenderit itaque eaque. Fugiat, ducimus, quos?</p>
+									<p>Inventore enim at ab, animi, iure consequuntur saepe hic excepturi distinctio eos. Cum atque illum repudiandae laborum rerum. Aperiam aut odio cum molestias doloremque quae, ab deserunt. Facilis dolor libero aspernatur nulla incidunt, quam adipisci qui, voluptatum soluta, sunt porro, molestiae quidem vero quisquam. Quia tempora temporibus quasi nesciunt dolor quo soluta expedita nisi repudiandae culpa! Quia error consectetur laborum debitis, voluptatum, corporis nobis, suscipit explicabo repellat quos non fugit? Aliquam, praesentium tempora rerum? Iure.</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-info">
+							<div class="card-header" role="tab" id="headingSix">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Six </a>
+								</h4>
+							</div>
+							<div id="collapseSix" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingSix" data-parent="#accordion">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab voluptatem, deserunt corporis in cum quas nostrum molestiae amet, laudantium assumenda rem libero minus pariatur est obcaecati sapiente neque laborum excepturi possimus quidem fugiat, explicabo optio. Ratione cum quos, quam facere similique fugit earum nemo harum eos a. Asperiores aspernatur porro optio, velit reprehenderit soluta nam possimus. Voluptatum, quae. Sequi adipisci nulla rem quisquam, atque deleniti veritatis laboriosam, quaerat, natus nesciunt laudantium, voluptatem impedit earum ex.</p>
+									<p>Cumque aut suscipit obcaecati, voluptatibus libero! Quidem totam minus veritatis rerum, maiores repudiandae, voluptatem corporis incidunt atque at. Assumenda, vero, dolor. Natus perspiciatis ratione, ea pariatur, voluptate optio quaerat odio nostrum, laboriosam, nobis ab eligendi eos assumenda nisi. Non commodi quam consequuntur voluptas cumque neque accusantium temporibus, perspiciatis magnam quia enim at optio ratione sunt illo praesentium natus labore. Necessitatibus nemo nulla quae magni ut. Ratione placeat debitis, quas soluta, possimus officiis vel laudantium iste.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="card wow zoomInUp animation-delay-2" style="visibility: visible; animation-name: zoomInUp;">
+					<div class="ms-hero-bg-warning ms-hero-img-meeting">
+						<h3 class="color-white index-1 text-center pb-4 pt-4 no-mb">F.A.Q. 2</h3>
+					</div>
+					<div class="panel-group ms-collapse no-margin" id="accordion2" role="tablist" aria-multiselectable="true">
+						<div class="card card-warning">
+							<div class="card-header" role="tab" id="headingOne2">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="withripple collapsed" role="button" data-toggle="collapse" href="#collapseOne2" aria-expanded="false" aria-controls="collapseOne2">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number One <div class="ripple-container"></div></a>
+								</h4>
+							</div>
+							<div id="collapseOne2" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingOne2" data-parent="#accordion2" style="">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias delectus laboriosam, ut placeat autem itaque, possimus illum dicta enim quia. Quam similique voluptate illo debitis corrupti sunt, vitae dicta officia impedit hic.</p>
+									<p>Perferendis, odit consequuntur. Numquam doloremque aperiam ut, adipisci molestiae, delectus deleniti accusamus expedita sit suscipit nostrum voluptatem perspiciatis deserunt optio hic nihil distinctio nesciunt. Dolor assumenda repudiandae, tempora magni quidem maiores minima adipisci architecto porro accusamus alias fugit, doloremque fugiat veniam est totam.</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-warning">
+							<div class="card-header" role="tab" id="headingTwo2">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseTwo2" aria-expanded="false" aria-controls="collapseTwo2">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Two </a>
+								</h4>
+							</div>
+							<div id="collapseTwo2" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingTwo2" data-parent="#accordion2">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias delectus laboriosam, ut placeat autem itaque, possimus illum dicta enim quia. Quam similique voluptate illo debitis corrupti sunt, vitae dicta officia impedit hic.</p>
+									<p>Perferendis, odit consequuntur. Numquam doloremque aperiam ut, adipisci molestiae, delectus deleniti accusamus expedita sit suscipit nostrum voluptatem perspiciatis deserunt optio hic nihil distinctio nesciunt. Dolor assumenda repudiandae, tempora magni quidem maiores minima adipisci architecto porro accusamus alias fugit, doloremque fugiat veniam est totam.</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-warning">
+							<div class="card-header" role="tab" id="headingThree2">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseThree2" aria-expanded="false" aria-controls="collapseThree2">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Three </a>
+								</h4>
+							</div>
+							<div id="collapseThree2" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingThree2" data-parent="#accordion2">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum dolore voluptates corporis. Sint ullam quidem, alias. Mollitia vero quidem quis numquam id sed magnam temporibus hic atque ad similique possimus aspernatur fuga delectus est, dolorum sunt sapiente blanditiis sequi esse ut nihil repellendus. Quisquam repudiandae ratione quam assumenda, voluptatibus impedit illo eligendi illum architecto soluta tenetur debitis similique ex nam mollitia, dolores vel accusantium. Illum odio eius beatae, enim tenetur dolore voluptatem quos quas. Molestiae!</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-warning">
+							<div class="card-header" role="tab" id="headingFour2">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseFour2" aria-expanded="false" aria-controls="collapseFour2">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Four </a>
+								</h4>
+							</div>
+							<div id="collapseFour2" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingFour2" data-parent="#accordion2">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias exercitationem qui blanditiis harum itaque perferendis autem, consequatur fugiat deserunt impedit maiores magni, voluptatum, atque, recusandae facere tempore minima facilis! Commodi id dignissimos vel, deleniti officia, eligendi porro asperiores, enim rerum, quibusdam tempora perspiciatis alias voluptatum. Voluptatum facilis, quod aperiam fugiat odio exercitationem labore cupiditate enim quos possimus quasi, inventore adipisci voluptatibus non amet soluta explicabo iste, assumenda vel impedit. Quo eius sit, voluptas consequuntur pariatur.</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-warning">
+							<div class="card-header" role="tab" id="headingFive2">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseFive2" aria-expanded="false" aria-controls="collapseFive2">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Five </a>
+								</h4>
+							</div>
+							<div id="collapseFive2" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingFive2" data-parent="#accordion2">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste voluptatem placeat nihil. Rerum magnam velit modi, eum eius deleniti fuga ducimus nisi cum assumenda inventore, neque itaque fugiat tempore suscipit magni nobis. Hic consequuntur odit eligendi possimus optio saepe eveniet! Corporis cumque aut quaerat consectetur sunt iure molestiae, repellendus dolore velit odio blanditiis numquam assumenda eius quod ipsam ipsum quibusdam excepturi maxime non, eligendi repudiandae sit repellat, vel? Culpa reprehenderit itaque eaque. Fugiat, ducimus, quos?</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-warning">
+							<div class="card-header" role="tab" id="headingSix2">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseSix2" aria-expanded="false" aria-controls="collapseSix2">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Six </a>
+								</h4>
+							</div>
+							<div id="collapseSix2" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingSix2" data-parent="#accordion2">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab voluptatem, deserunt corporis in cum quas nostrum molestiae amet, laudantium assumenda rem libero minus pariatur est obcaecati sapiente neque laborum excepturi possimus quidem fugiat, explicabo optio. Ratione cum quos, quam facere similique fugit earum nemo harum eos a. Asperiores aspernatur porro optio, velit reprehenderit soluta nam possimus. Voluptatum, quae. Sequi adipisci nulla rem quisquam, atque deleniti veritatis laboriosam, quaerat, natus nesciunt laudantium, voluptatem impedit earum ex.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6">
+				<div class="card wow zoomInUp animation-delay-2" style="visibility: visible; animation-name: zoomInUp;">
+					<div class="ms-hero-bg-success ms-hero-img-coffee">
+						<h3 class="color-white index-1 text-center pb-4 pt-4 no-mb">F.A.Q. 3</h3>
+					</div>
+					<div class="panel-group ms-collapse no-margin" id="accordion3" role="tablist" aria-multiselectable="true">
+						<div class="card card-success">
+							<div class="card-header" role="tab" id="headingOne3">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="withripple collapsed" role="button" data-toggle="collapse" href="#collapseOne3" aria-expanded="false" aria-controls="collapseOne3">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number One <div class="ripple-container"></div></a>
+								</h4>
+							</div>
+							<div id="collapseOne3" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingOne3" data-parent="#accordion3" style="">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias delectus laboriosam, ut placeat autem itaque, possimus illum dicta enim quia. Quam similique voluptate illo debitis corrupti sunt, vitae dicta officia impedit hic.</p>
+									<p>Perferendis, odit consequuntur. adipisci molestiae, delectus deleniti accusamus expedita sit suscipit nostrum voluptatem perspiciatis deserunt optio hic nihil distinctio nesciunt. Dolor assumenda repudiandae, tempora magni quidem maiores minima adipisci architecto porro accusamus alias fugit, doloremque fugiat veniam est totam.</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-success">
+							<div class="card-header" role="tab" id="headingTwo3">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseTwo3" aria-expanded="false" aria-controls="collapseTwo3">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Two </a>
+								</h4>
+							</div>
+							<div id="collapseTwo3" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingTwo3" data-parent="#accordion3">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias delectus laboriosam, ut placeat autem itaque, possimus illum dicta enim quia. Quam similique voluptate illo debitis corrupti sunt, vitae dicta officia impedit hic.</p>
+									<p>Perferendis, odit consequuntur. Numquam doloremque aperiam ut, adipisci molestiae, delectus deleniti accusamus expedita sit suscipit nostrum voluptatem perspiciatis deserunt optio hic nihil distinctio nesciunt. Dolor assumenda repudiandae, tempora magni quidem maiores minima adipisci architecto porro accusamus alias fugit, doloremque fugiat veniam est totam.</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-success">
+							<div class="card-header" role="tab" id="headingThree3">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseThree3" aria-expanded="false" aria-controls="collapseThree3">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Three </a>
+								</h4>
+							</div>
+							<div id="collapseThree3" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingThree3" data-parent="#accordion3">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum dolore voluptates corporis. Sint ullam quidem, alias. Mollitia vero quidem quis numquam id sed magnam temporibus hic atque ad similique possimus aspernatur fuga delectus est, dolorum sunt sapiente blanditiis sequi esse ut nihil repellendus. Quisquam repudiandae ratione quam assumenda, voluptatibus impedit illo eligendi illum architecto soluta tenetur debitis similique ex nam mollitia, dolores vel accusantium. Illum odio eius beatae, enim tenetur dolore voluptatem quos quas. Molestiae!</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-success">
+							<div class="card-header" role="tab" id="headingFour3">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseFour3" aria-expanded="false" aria-controls="collapseFour3">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Four </a>
+								</h4>
+							</div>
+							<div id="collapseFour3" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingFour3" data-parent="#accordion3">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias exercitationem qui blanditiis harum itaque perferendis autem, consequatur fugiat deserunt impedit maiores magni, voluptatum, atque, recusandae facere tempore minima facilis! Commodi id dignissimos vel, deleniti officia, eligendi porro asperiores, enim rerum, quibusdam tempora perspiciatis alias voluptatum. Voluptatum facilis, quod aperiam fugiat odio exercitationem labore cupiditate enim quos possimus quasi, inventore adipisci voluptatibus non amet soluta explicabo iste, assumenda vel impedit. Quo eius sit, voluptas consequuntur pariatur.</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-success">
+							<div class="card-header" role="tab" id="headingFive3">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseFive3" aria-expanded="false" aria-controls="collapseFive3">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Five </a>
+								</h4>
+							</div>
+							<div id="collapseFive3" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingFive3" data-parent="#accordion3">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iste voluptatem placeat nihil. Rerum magnam velit modi, eum eius deleniti fuga ducimus nisi cum assumenda inventore, neque itaque fugiat tempore suscipit magni nobis. Hic consequuntur odit eligendi possimus optio saepe eveniet! Corporis cumque aut quaerat consectetur sunt iure molestiae, repellendus dolore velit odio blanditiis numquam assumenda eius quod ipsam ipsum quibusdam excepturi maxime non, eligendi repudiandae sit repellat, vel? Culpa reprehenderit itaque eaque. Fugiat, ducimus, quos?</p>
+								</div>
+							</div>
+						</div>
+						<div class="card card-success">
+							<div class="card-header" role="tab" id="headingSix3">
+								<h4 class="card-title ms-rotate-icon">
+									<a class="collapsed withripple" role="button" data-toggle="collapse" href="#collapseSix3" aria-expanded="false" aria-controls="collapseSix3">
+										<i class="zmdi zmdi-attachment-alt"></i> Question Number Six </a>
+								</h4>
+							</div>
+							<div id="collapseSix3" class="card-collapse collapse" role="tabpanel" aria-labelledby="headingSix3" data-parent="#accordion3">
+								<div class="card-body">
+									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab voluptatem, deserunt corporis in cum quas nostrum molestiae amet, laudantium assumenda rem libero minus pariatur est obcaecati sapiente neque laborum excepturi possimus quidem fugiat, explicabo optio. Ratione cum quos, quam facere similique fugit earum nemo harum eos a. Asperiores aspernatur porro optio, velit reprehenderit soluta nam possimus. Voluptatum, quae. Sequi adipisci nulla rem quisquam, atque deleniti veritatis laboriosam, quaerat, natus nesciunt laudantium, voluptatem impedit earum ex.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endmacro %}
+{# Section FAQ #}
+
+
+{# Section Slider #}
+{% macro Slider(
+				 Data = {},
+				 Mode = ''
+) -%}
+	{% if Mode == 'Portfolio' %}
+		<div class="container mt-6">
+			<h2 class="text-center color-primary mb-4">{{ Data.Title }}</h2>
+			<div class="owl-dots"></div>
+			<div class="owl-carousel owl-theme">
+				{% for item in Data['items'] %}
+					<div class="card animation-delay-{{ loop.index ++1 }}">
+						<div class="withripple zoom-img">
+							<a href="{{ Data['Category'] }}/{{ item }}">
+								<img src="{{ Data['items'][item].image }}" alt="..." class="img-fluid">
+							</a>
+						</div>
+						<div class="card-body">
+							<h3 class="color-primary">{{ Data['items'][item].Title }}</h3>
+							<p>{{ Data['items'][item].Description }}</p>
+							<p class="text-right">
+								<a href="{{ Data['Category'] }}/{{ item }}"
+								   class="btn btn-primary btn-raised text-right"
+								   role="button">
+									<i class="zmdi zmdi-collection-image-o"></i>
+									подробнее
+								</a>
+							</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	{% elif Mode == 'Video' %}
+		<header class="ms-hero ms-hero-black mb-6">
+			<div id="carousel-header" class="carousel carousel-header slide" data-ride="carousel" data-interval="5000">
+				<!-- Indicators -->
+				<ol class="carousel-indicators">
+                {% for item in Data %}
+					<li data-target="#carousel-header" data-slide-to="{{ loop.index }}" class="{% if loop.index == 1 %}active{% endif %}"></li>
+                {% endfor %}
+				</ol>
+				<!-- Wrapper for slides -->
+				<div class="carousel-inner" role="listbox">
+                    {% for item in Data %}
+					<div class="carousel-item {% if loop.index == 1 %} active {% endif %}">
+						<div class="container">
+							<div class="row">
+								<div class="col-xl-6 col-lg-7">
+									<div class="carousel-caption">
+                                        <div class="ms-hero-material-text-container">
+                                            <header class="ms-hero-material-title animated slideInLeft animation-delay-1">
+                                                <h1 class="animated color-{{ Data[item]['Title'].color }} fadeInLeft animation-delay-{{ loop.index }} font-smoothing">{{ Data[item]['Title'].text }}</h1>
+                                                <h3 class="animated color-{{ Data[item]['Description'].color }} fadeInLeft animation-delay-{{ loop.index }}">{{ Data[item]['Description'].text }}</h3>
+                                            </header>
+                                            <br>
+                                        </div>
+                                        <ul class="list-unstyled list-hero font-small">
+                                            {% for service in Data[item]['items'] %}
+                                            <li>
+                                                <i style="color: {{ Data[item]['items'][service].style_color }}"
+                                                   class="animated flipInX animation-delay-6
+                                                          color-{{ Data[item]['items'][service].Color }}
+                                                          {{ Data[item]['items'][service].Icon }}">
+
+                                                </i>
+                                                <span class=" color-{{ Data[item]['items'][service].Color }}
+                                                              animated fadeInRightTiny
+                                                              animation-delay-{{ loop.index }}">
+                                                    {{ Data[item]['items'][service].Text }}
+                                                </span>
+                                            </li>
+                                            {% endfor %}
+                                        </ul>
+                                        <div class="text-center">
+											<a href="#" class="btn btn-primary btn-xlg btn-raised animated flipInX animation-delay-16"><i class="zmdi zmdi-settings"></i> Personalize {{ loop.index }} </a>
+											<a href="#" class="btn btn-warning btn-xlg btn-raised animated flipInX animation-delay-18"><i class="zmdi zmdi-download"></i> Download {{ loop.index }}</a>
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-6 col-lg-5">
+									<img src="{{ Data[item]['images'][loop.index0] }}"
+                                         alt="..."
+                                         class="img-fluid mt-6 center-block text-center animated slideInRightTiny animation-delay-5">
+								</div>
+							</div>
+						</div>
+					</div>
+                    {% endfor %}
+				</div>
+				<!-- Controls -->
+				<a href="#carousel-header" class="btn-circle btn-circle-xs btn-circle-raised btn-circle-primary left carousel-control" role="button" data-slide="prev"><i class="zmdi zmdi-chevron-left"></i></a>
+				<a href="#carousel-header" class="btn-circle btn-circle-xs btn-circle-raised btn-circle-primary right carousel-control" role="button" data-slide="next"><i class="zmdi zmdi-chevron-right"></i></a>
+			</div>
+		</header>
+	{% endif %}
+{% endmacro %}
+{# Section Slider #}
+
+
+{% macro Portafolio_item(
+                            Data = {},
+                            Job_Name = ''
+) -%}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="card">
+					<div id="carousel-example-generic"
+                         class="ms-carousel carousel slide"
+                         data-ride="carousel">
+						<!-- Indicators -->
+						<ol class="carousel-indicators">
+                        {% for image in Data['items'][Job_Name]['Images'] %}
+							<li data-target="#carousel-example-generic"
+                                data-slide-to="{{ loop.index0 }}"
+                                class="{% if loop.index == 1 %}active{% endif %}"></li>
+                        {% endfor %}
+						</ol>
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner" role="listbox">
+                            {% for item in Data['items'][Job_Name]['Images'] %}
+                                <div class="carousel-item {% if loop.index == 1 %} active {% endif %}">
+                                    <img class="d-block img-fluid"
+                                         src="{{ Data['items'][Job_Name]['Images']['src'][loop.index0] }}" alt="...">
+                                    <div class="carousel-caption">
+                                        <h3>{{ Data['items'][Job_Name]['Images']['Title'][loop.index0] }}</h3>
+                                        <p> {{ Data['items'][Job_Name]['Images']['Description'][loop.index0] }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+						</div>
+						<!-- Controls -->
+						<a href="#carousel-example-generic"
+                           class="btn-circle btn-circle-xs
+                                  btn-circle-raised btn-circle-primary
+                                  left carousel-control-prev"
+                           role="button" data-slide="prev">
+                            <i class="zmdi zmdi-chevron-left"></i>
+                        </a>
+						<a href="#carousel-example-generic"
+                           class="btn-circle btn-circle-xs
+                                  btn-circle-raised btn-circle-primary
+                                  right carousel-control-next"
+                           role="button"
+                           data-slide="next">
+                            <i class="zmdi zmdi-chevron-right"></i>
+                        </a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<div class="card">
+					<div class="ms-hero-bg-primary ms-hero-img-mountain">
+						<h2 class="text-center no-m pt-4 pb-4 color-white index-1">{{ Data['items'][Job_Name]['Title'] }}</h2>
+					</div>
+					<div class="card-body">
+						<h3 class="color-primary no-mt">{{ Data['items'][Job_Name]['Info']['Data']['Title'][1] }}</h3>
+						<ul class="list-unstyled">
+                            {% for item in Data['items'][Job_Name]['Info']['Data'] %}
+                                {% if loop.index == 1 %}
+                                <li><strong>{{ Data['items'][Job_Name]['Info']['Data'][item][0] }}: </strong> {{ Data['items'][Job_Name].Title }} </li>
+                                {% else %}
+                                    <li><strong>{{ Data['items'][Job_Name]['Info']['Data'][item][0] }}: </strong> {{ Data['items'][Job_Name]['Info']['Data'][item][1] }} </li>
+                                {% endif %}
+							{% endfor %}
+						</ul>
+{#                    <br>#}
+						<h3 class="color-primary">{{ Data['items'][Job_Name]['Info']['Description'].Title }}</h3>
+                        <p>{{ Data['items'][Job_Name]['Info']['Description']['Paragraph'] }}</p>
+						<p class="text-center">
+                            <a href="{{ Data['items'][Job_Name]['Info']['Description']['Preview'].href }}"
+                               target="_blank"
+                               class="btn btn-raised btn-primary">
+                                <i class="fa fa-desktop"></i>
+                                {{ Data['items'][Job_Name]['Info']['Description']['Preview'].Label }}
+                            </a>
+                        </p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container wow fadeInUp" style="visibility: visible; animation-name: fadeInUp;">
+		<div class="row">
+			<div class="col-lg-8 text-justify">
+				<h2 class="color-primary right-line">{{ Data['items'][Job_Name]['Feedback']['Client']['Title'] }}</h2>
+				<p class="dropcaps">{{ Data['items'][Job_Name]['Feedback']['Client']['Paragraph'] }}</p>
+				<p class="text-right">
+					<cite class="lead color primary-color">{{ Data['items'][Job_Name]['Feedback']['Client']['Sign'] }}</cite>
+				</p>
+			</div>
+			<div class="col-lg-4 col-md-6">
+				<h2 class="color-primary right-line">{{ Data['items'][Job_Name]['Feedback']['Team']['Title'] }}</h2>
+				<div class="">
+					<div class="card mt-4 card-warning wow zoomInUp animation-delay-2" style="visibility: visible; animation-name: zoomInUp;">
+						<div class="ms-hero-bg-warning ms-hero-img-meeting" style="height: 170px;">
+							<h3 class="color-white index-1 text-center no-m pt-4">{{ Data['items'][Job_Name]['Feedback']['Team'].Name }}</h3>
+							<div class="color-medium index-1 text-center np-m">{{ Data['items'][Job_Name]['Feedback']['Team'].Position }}</div>
+							<img alt="..." class="img-avatar-circle"
+                                 style="margin-top: -28px;"
+                                 src="{{ Data['items'][Job_Name]['Feedback']['Team'].Image }}">
+						</div>
+						<blockquote class="blockquote mt-4">
+							<p>{{ Data['items'][Job_Name]['Feedback']['Team'].Paragraph }}</p>
+							<footer>{{ Data['items'][Job_Name]['Feedback']['Team'].Sign }}<cite
+                                    title='{{ Data['items'][Job_Name]['Feedback']['Team'].Name }}'>
+                                {{ Data['items'][Job_Name]['Feedback']['Team'].Name }}</cite>
+                            </footer>
+						</blockquote>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endmacro %}
+
+
+{% macro Portafolio_similar() -%}
+	<div class="container">
+		<h2 class="right-line mt-6">Похожие работы</h2>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="card">
+					<a href="javascript:void(0)">
+						<img src="https://agmstudio.io/themes/material-style/2.4.4/assets/img/demo/port4.jpg" alt="..." class="img-fluid">
+					</a>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card">
+					<a href="javascript:void(0)">
+						<img src="https://agmstudio.io/themes/material-style/2.4.4/assets/img/demo/port7.jpg" alt="..." class="img-fluid">
+					</a>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card">
+					<a href="javascript:void(0)">
+						<img src="https://agmstudio.io/themes/material-style/2.4.4/assets/img/demo/port9.jpg" alt="..." class="img-fluid">
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endmacro %}
+
+{% macro Price(
+				Mode = '',
+				Data = {}
+) -%}
+	<div class="wrap ms-hero-img-road ms-hero-bg-royal ms-bg-fixe mt-6">
+		<div class="container">
+			<div class="text-center mb-4">
+				<h2 class="uppercase color-white">See our subscription plans</h2>
+				<p class="lead uppercase color-light">Surprise with our unique features</p>
+			</div>
+			<div class="row no-gutters">
+				<div class="col-xl-3 col-md-6">
+					<div style="visibility: visible; animation-name: zoomInUp;" class="price-table price-table-info wow zoomInUp animation-delay-2">
+						<header class="price-table-header">
+							<span class="price-table-category">Personal</span>
+							<h3><sup>$</sup>19.99 <sub>/mo.</sub></h3>
+						</header>
+						<div class="price-table-body">
+							<ul class="price-table-list">
+								<li><i class="zmdi zmdi-code"></i> Lorem ipsum dolor sit amet.</li>
+								<li><i class="zmdi zmdi-globe"></i> Voluptate ex quam autem dolor.</li>
+								<li><i class="zmdi zmdi-settings"></i> Dignissimos velit reic cumque.</li>
+								<li><i class="zmdi zmdi-cloud"></i> Nihil corrupti soluta vitae non.</li>
+								<li><i class="zmdi zmdi-star"></i> Atque molestiae, blanditiis ratione.</li>
+							</ul>
+							<div class="text-center">
+								<a href="javascript:void(0)" class="btn btn-info btn-raised"><i class="zmdi zmdi-cloud-download"></i> Get Now</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-md-6">
+					<div style="visibility: visible; animation-name: zoomInDown;" class="price-table price-table-success prominent wow zoomInDown animation-delay-2">
+						<header class="price-table-header">
+							<span class="price-table-category">Professional</span>
+							<h3><sup>$</sup>49.99 <sub>/mo.</sub></h3>
+						</header>
+						<div class="price-table-body">
+							<ul class="price-table-list">
+								<li><i class="zmdi zmdi-code"></i> Lorem ipsum dolor sit amet.</li>
+								<li><i class="zmdi zmdi-globe"></i> Voluptate ex quam autem dolor.</li>
+								<li><i class="zmdi zmdi-settings"></i> Dignissimos velit reic cumque.</li>
+								<li><i class="zmdi zmdi-cloud"></i> Nihil corrupti soluta vitae non.</li>
+								<li><i class="zmdi zmdi-star"></i> Atque molestiae, blanditiis ratione.</li>
+							</ul>
+							<div class="text-center">
+								<a href="javascript:void(0)" class="btn btn-success btn-raised"><i class="zmdi zmdi-cloud-download"></i> Get Now</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-3 col-md-6">
+					<div class="price-table price-table-danger wow zoomInUp animation-delay-2" style="visibility: visible; animation-name: zoomInUp;">
+						<header class="price-table-header">
+							<span class="price-table-category">Business</span>
+							<h3><sup>$</sup>99.99 <sub>/mo.</sub></h3>
+						</header>
+						<div class="price-table-body">
+							<ul class="price-table-list">
+								<li><i class="zmdi zmdi-code"></i> Lorem ipsum dolor sit amet.</li>
+								<li><i class="zmdi zmdi-globe"></i> Voluptate ex quam autem dolor.</li>
+								<li><i class="zmdi zmdi-settings"></i> Dignissimos velit reic cumque.</li>
+								<li><i class="zmdi zmdi-cloud"></i> Nihil corrupti soluta vitae non.</li>
+								<li><i class="zmdi zmdi-star"></i> Atque molestiae, blanditiis ratione.</li>
+							</ul>
+							<div class="text-center">
+								<a href="javascript:void(0)" class="btn btn-danger btn-raised"><i class="zmdi zmdi-cloud-download"></i> Get Now</a>
+							</div>
+						</div>
+					</div>
+				</div><div class="col-xl-3 col-md-6">
+				<div style="visibility: visible; animation-name: zoomInUp;" class="price-table price-table-royal wow zoomInUp animation-delay-2">
+					<header class="price-table-header">
+						<span class="price-table-category">Business</span>
+						<h3><sup>$</sup>99.99 <sub>/mo.</sub></h3>
+					</header>
+					<div class="price-table-body">
+						<ul class="price-table-list">
+							<li><i class="zmdi zmdi-code"></i> Lorem ipsum dolor sit amet.</li>
+							<li><i class="zmdi zmdi-globe"></i> Voluptate ex quam autem dolor.</li>
+							<li><i class="zmdi zmdi-settings"></i> Dignissimos velit reic cumque.</li>
+							<li><i class="zmdi zmdi-cloud"></i> Nihil corrupti soluta vitae non.</li>
+							<li><i class="zmdi zmdi-star"></i> Atque molestiae, blanditiis ratione.</li>
+						</ul>
+						<div class="text-center">
+							<a href="javascript:void(0)" class="btn btn-royal btn-raised"><i class="zmdi zmdi-cloud-download"></i> Get Now</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+
+
+		</div>
+		<!--container -->
+	</div>
+{% endmacro %}

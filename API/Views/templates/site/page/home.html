@@ -1,0 +1,107 @@
+{% extends "site/base/header.html" %}
+{% import "site/base/components/sections.html" as section %}
+{% import "site/base/components/contacts.html" as contact %}
+{#{% import "site/base/components/message.html" as message %}#}
+
+
+{% block title %}
+
+    {% if request.path in urls %}
+        {{ urls[request.path][1] }}
+    {% else %}
+        Portfolio Item
+    {% endif %}
+
+{% endblock title %}
+
+{% block components %}
+	{# Home Page #}
+	{% if request.path == '/' %}
+
+		{{ section.Header(
+							Mode = 'Slider',
+							Data = Header['Slider']
+    	) }}
+
+		{{ section.Services(
+							Mode = 'Advance',
+							Data = Services['Advance']
+		) }}
+
+		{{ section.Info(
+							Mode = 'Description',
+							Data = Info['Description']
+		) }}
+
+		{{ section.Info(
+							Mode = 'Advance',
+							Data = Info['Advance']
+		) }}
+
+		{{ section.Info(
+							Mode = 'Basic',
+							Data = Info['Basic']
+		) }}
+
+		{{ section.Slider(
+		                    Mode = 'Portfolio',
+		                    Data = Slider['Portfolio']
+		) }}
+
+
+	{# About US #}
+	{% elif request.path == '/about_us' %}
+		{{ section.Header(
+							Mode = 'Basic',
+							Data = Header['Basic']
+						 )
+		}}
+
+        {{ section.Info(
+		                Mode = 'Article',
+                        Data = Info['About_US']
+                       )
+        }}
+
+        {{ section.Info(
+		                Mode = 'Article_View',
+                        Data = Info['About_US']['Our_look']
+        ) }}
+
+		{#{{ section.Info(
+		                Mode = 'Article_History',
+                        Data = Info['About_US']['History']
+        ) }}#}
+
+	{# Services #}
+	{% elif request.path == '/services' %}
+		{{ section.Slider(
+		                    Mode = 'Video',
+		                    Data = Slider['Services']
+		) }}
+
+        {{ section.Services(
+                            Mode = 'Description',
+                            Data = Services['All']
+                           )
+        }}
+
+    {# Contact US #}
+	{% elif request.path == '/contact_us' %}
+		{{ contact.Show(
+		                Mode = 'Page',
+		                Action = '/send',
+		                Method = 'POST',
+                        Data = Contact['Page']
+		) }}
+
+	{# F.A.Q #}
+	{% elif request.path == '/faq' %}
+		{{ section.Header(
+							Mode = 'Basic',
+							Data = Header['Basic']
+	) }}
+		{{ section.FAQ() }}
+		{{ contact.Show() }}
+	{% endif %}
+{% endblock %}

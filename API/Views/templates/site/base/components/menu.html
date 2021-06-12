@@ -1,0 +1,343 @@
+{% macro Social(
+                Text='',
+                Menu_items={}
+) -%}
+
+<div class="ms-footbar-block">
+  <h3 class="ms-footbar-title">{{ Text }}</h3>
+  <div class="ms-footbar-social">
+    {% for item in Menu_items %}
+    <a href="{{ item }}" class="btn-circle btn-{{ Menu_items[item] }}"><i class="zmdi zmdi-{{ Menu_items[item] }}"></i></a>
+    {% endfor %}
+  </div>
+</div>
+
+{% endmacro %}
+
+
+{% macro Navbar(
+              Brand='',
+              Name='',
+              Action='disable',
+              Mode='default',
+              Sub_Menu_items={},
+              Menu_items={}
+
+) -%}
+
+{% if Mode == 'default' %}
+<nav class="navbar navbar-expand-md navbar-static ms-navbar ms-navbar-primary">
+    <div class="container container-full">
+        <div class="navbar-header col-md-3">
+            <a class="navbar-brand col-md-12" href="/">
+                <img class="animated zoomInLeft animation-delay-2"
+                     src="/static/site/Master_Mind/img/logo.png"
+                     style="width: 60px;">
+                <span class="ms-title"
+                      id="logo">
+                <strong> {{ Brand }} </strong>
+                {{ Name }}
+            </span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse col-md-8 " id="ms-navbar">
+            <ul class="navbar-nav">
+                {% for item in Menu_items %}
+                    <li class="nav-item {% if request.path == item %} active {% endif %}">
+                        <a 	href="{{ item }}" class="nav-link" role="button">
+                            <i class="zmdi zmdi-{{ Menu_items[item][0] }}"></i>&nbsp;
+                            {{ Menu_items[item][1] }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <a href="javascript:void(0)" class="ms-toggle-left btn-navbar-menu"><i class="zmdi zmdi-menu"></i><div class="ripple-container"></div></a>
+    </div>
+</nav>
+{% elif Mode == 'Sub_Menu' -%}
+<nav class="navbar navbar-expand-md navbar-static ms-navbar ms-navbar-primary">
+	<div class="container container-full">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">
+{#				<!-- <img src="assets/img/demo/logo-navbar.png" alt=""> -->#}
+				<span class="ms-logo ms-logo-sm">M</span>
+				<span class="ms-title"> {{ Logo_Title }} <strong> {{ Logo_Title_Strong }} </strong></span>
+			</a>
+		</div>
+		<div class="collapse navbar-collapse" id="ms-navbar">
+			<ul class="navbar-nav">
+				<li class="nav-item active">
+					<a 	href="javascript:void(0)" class="nav-link" role="button">
+						<i class="zmdi zmdi-alert-triangle"></i>&nbsp;
+						MODE: &nbsp; <b>Sub_Menu</b>
+					</a>
+				</li>
+		</div>
+		<a href="javascript:void(0)" class="ms-toggle-left btn-navbar-menu"><i class="zmdi zmdi-menu"></i><div class="ripple-container"></div></a>
+	</div>
+</nav>
+{% else -%}
+<nav class="navbar navbar-expand-md navbar-static ms-navbar ms-navbar-primary">
+	<div class="container container-full">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="/">
+				<!-- <img src="assets/img/demo/logo-navbar.png" alt=""> -->
+				<span class="ms-logo ms-logo-sm">M</span>
+				<span class="ms-title"> {{ Logo_Title }} <strong> {{ Logo_Title_Strong }} </strong></span>
+			</a>
+		</div>
+		<div class="collapse navbar-collapse" id="ms-navbar">
+			<ul class="navbar-nav">
+				<li class="nav-item active">
+					<a 	href="javascript:void(0)" class="nav-link" role="button">
+						<i class="zmdi zmdi-alert-triangle"></i>&nbsp;
+						ERROR: You must choose &nbsp; <b>Sub_Menu</b> , &nbsp;<b>default</b> &nbsp; or nothing.
+					</a>
+				</li>
+		</div>
+		<a href="javascript:void(0)" class="ms-toggle-left btn-navbar-menu"><i class="zmdi zmdi-menu"></i><div class="ripple-container"></div></a>
+	</div>
+</nav>
+{% endif %}
+    
+<!--Mobile Menu-->
+<div class="ms-slidebar sb-slidebar sb-left sb-style-overlay" id="ms-slidebar">
+	<div class="sb-slidebar-container">
+		<header class="ms-slidebar-header">
+			<div class="ms-slidebar-login">
+				<a href="javascript:void(0)" class="withripple"><i class="zmdi zmdi-account"></i> Login</a>
+				<a href="javascript:void(0)" class="withripple"><i class="zmdi zmdi-account-add"></i> Register</a>
+			</div>
+			<div class="ms-slidebar-title">
+				<div class=" center ms-slidebar-t">
+					<img class="animated zoomInLeft animation-delay-2" src="/static/site/Master_Mind/img/logo.png" style="width: 50px;">
+					<h3><span style="font-size: 26px; font-weight: 200;"><strong> {{ Brand }} </strong>  {{ Name }} </span></h3>
+				</div>
+			</div>
+		</header>
+		<ul class="ms-slidebar-menu" id="slidebar-menu" role="tablist" aria-multiselectable="true">
+			{% for item in Menu_items %}
+			<li>
+				<a 	class="link"
+					{% if request.path == item %} style="color: #9c27b0;" {% endif %}
+						href="{{ item }}"><i class="zmdi zmdi-{{ Menu_items[item][0] }}"></i>
+						{{ Menu_items[item][1] }}
+						</a>
+			</li>
+				{% endfor %}
+		</ul>
+{#		<div class="ms-slidebar-social ms-slidebar-block">#}
+{#			<h4 class="ms-slidebar-block-title">Social Links</h4>#}
+{#			<div class="ms-slidebar-social">#}
+{#				<a href="javascript:void(0)" class="btn-circle btn-circle-raised btn-facebook"><i class="zmdi zmdi-facebook"></i> <span class="badge-pill badge-pill-pink">12</span>#}
+{#					<div class="ripple-container"></div>#}
+{#				</a>#}
+{#			</div>#}
+{#		</div>#}
+	</div>
+</div>
+<!--Mobile Menu-->
+{% endmacro %}
+
+
+{% macro Header(
+                Brand = '',
+                Name = '',
+                Menu_items={}
+) -%}
+
+<!--Model-->
+<div class="ms-site-container">
+      <!-- Modal -->
+      <div class="modal modal-primary" id="ms-account-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog animated zoomIn animated-3x" role="document">
+          <div class="modal-content">
+            <div class="modal-header d-block shadow-2dp no-pb">
+              <button type="button" class="close d-inline pull-right mt-2" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">
+                    <i class="zmdi zmdi-close"></i>
+                  </span>
+              </button>
+              <div class="modal-title text-center">
+                <img id="brand_logo" class="animated zoomInDown animation-delay-5" src="/static/site/Master_Mind/img/logo.png" alt="">
+                <h3 id="brand" class="no-m ms-site-title"><span>{{ Brand }}</span>{{ Name }}</h3>
+              </div>
+              <div class="modal-header-tabs">
+                <ul class="nav nav-tabs nav-tabs-full nav-tabs-3 nav-tabs-primary" role="tablist">
+                  <li class="nav-item"
+                      role="presentation">
+                      <a href="#ms-login-tab"
+                         aria-controls="ms-login-tab"
+                         role="tab"
+                         data-toggle="tab"
+                         class="nav-link active withoutripple">
+                          <i class="zmdi zmdi-account"></i>
+                          Login
+                      </a>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                      <a href="#ms-register-tab"
+                         aria-controls="ms-register-tab"
+                         role="tab"
+                         data-toggle="tab"
+                         class="nav-link withoutripple">
+                          <i class="zmdi zmdi-account-add"></i>
+                          Register
+                      </a>
+                  </li>
+                  <li class="nav-item"
+                      role="presentation">
+                      <a href="#ms-recovery-tab"
+                         aria-controls="ms-recovery-tab"
+                         role="tab"
+                         data-toggle="tab"
+                         class="nav-link withoutripple">
+                          <i class="zmdi zmdi-key"></i>
+                          Recovery Pass
+                      </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="modal-body">
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade active show" id="ms-login-tab">
+                  <form autocomplete="off">
+                    <fieldset>
+                      <div class="form-group label-floating">
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                          <label class="control-label" for="ms-form-user">Username</label>
+                          <input type="text" id="ms-form-user" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group label-floating">
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                          <label class="control-label" for="ms-form-pass">Password</label>
+                          <input type="password" id="ms-form-pass" class="form-control">
+                        </div>
+                      </div>
+                      <div class="row mt-2">
+                        <div class="col-md-6">
+                          <div class="form-group no-mt">
+                            <div class="checkbox">
+                              <label>
+                                <input type="checkbox"> Remember Me </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <button class="btn btn-raised btn-primary pull-right col-lg-8">Login</button>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </form>
+                  <div class="text-center">
+                    <h3>Login with</h3>
+                    <a href="javascript:void(0)" class="wave-effect-light btn btn-raised btn-facebook"><i class="zmdi zmdi-facebook"></i> Facebook</a>
+                    <a href="javascript:void(0)" class="wave-effect-light btn btn-raised btn-twitter"><i class="zmdi zmdi-twitter"></i> Twitter</a>
+                    <a href="javascript:void(0)" class="wave-effect-light btn btn-raised btn-google"><i class="zmdi zmdi-google"></i> Google</a>
+                  </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="ms-register-tab">
+                  <form>
+                    <fieldset>
+                      <div class="form-group label-floating">
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                          <label class="control-label" for="ms-form-user-r">Username</label>
+                          <input type="text" id="ms-form-user-r" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group label-floating">
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                          <label class="control-label" for="ms-form-email-r">Email</label>
+                          <input type="email" id="ms-form-email-r" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group label-floating">
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                          <label class="control-label" for="ms-form-pass-r">Password</label>
+                          <input type="password" id="ms-form-pass-r" class="form-control">
+                        </div>
+                      </div>
+                      <div class="form-group label-floating">
+                        <div class="input-group">
+                          <span class="input-group-addon"><i class="zmdi zmdi-lock"></i></span>
+                          <label class="control-label" for="ms-form-pass-rn">Re-type Password</label>
+                          <input type="password" id="ms-form-pass-rn" class="form-control">
+                        </div>
+                      </div>
+                      <button class="btn btn-raised btn-block btn-primary">Register Now</button>
+                    </fieldset>
+                  </form>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="ms-recovery-tab">
+                  <fieldset>
+                    <div class="form-group label-floating">
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-account"></i></span>
+                        <label class="control-label" for="ms-form-user-re">Username</label>
+                        <input type="text" id="ms-form-user-re" class="form-control">
+                      </div>
+                    </div>
+                      <br>
+                      OR
+                    <div class="form-group label-floating">
+                      <div class="input-group">
+                        <span class="input-group-addon"><i class="zmdi zmdi-email"></i></span>
+                        <label class="control-label" for="ms-form-email-re">Email</label>
+                        <input type="email" id="ms-form-email-re" class="form-control">
+                      </div>
+                    </div>
+                    <button class="btn btn-raised btn-block btn-primary">Send Password</button>
+                  </fieldset>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<!--Model-->
+
+<header class="ms-header ms-header-primary">
+  <!--ms-header-primary-->
+  <div class="container container-full">
+    <div class="ms-title">
+      <a href="/">
+        <img id="logo" class="animated zoomInDown animation-delay-5" src="/static/site/Master_Mind/img/logo.png" alt="">
+        <h1 style="padding-top: 25px; margin-left: -13px;" class="animated fadeInRight animation-delay-6"><strong> {{ Brand }} </strong> {{ Name }}</h1>
+      </a>
+    </div>
+    <div class="header-right">
+      <div class="share-menu">
+              <ul class="share-menu-list">
+                <li class="animated fadeInRight animation-delay-3"><a href="javascript:void(0)" class="btn-circle btn-google"><i class="zmdi zmdi-google"></i></a></li>
+{#                <li class="animated fadeInRight animation-delay-2"><a href="javascript:void(0)" class="btn-circle btn-facebook"><i class="zmdi zmdi-facebook"></i></a></li>#}
+
+                <li class="animated fadeInRight animation-delay-2">
+                    <a href="javascript:void(0)" class="btn-circle btn-facebook">
+                    <i class="zmdi zmdi-facebook"></i>
+                    </a>
+                </li>
+
+                  <li class="animated fadeInRight animation-delay-1"><a href="javascript:void(0)" class="btn-circle btn-twitter"><i class="zmdi zmdi-twitter"></i></a></li>
+              </ul>
+              <a href="javascript:void(0)" class="btn-circle btn-circle-primary animated zoomInDown animation-delay-7"><i class="zmdi zmdi-share"></i></a>
+        </div>
+      {#<a href="javascript:void(0)"
+         class="btn-circle btn-circle-primary no-focus animated zoomInDown animation-delay-8"
+         data-toggle="modal"
+         data-target="#ms-account-modal">
+        <i class="zmdi zmdi-account"></i>
+      </a>#}
+    </div>
+  </div>
+</header>
+{% endmacro %}

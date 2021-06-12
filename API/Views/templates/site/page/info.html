@@ -1,0 +1,57 @@
+{% extends "site/base/header.html" %}
+{% import "site/base/components/sections.html" as section %}
+
+{% block title %}
+    {{ Title }}
+{% endblock title %}
+
+{% block components %}
+
+{#
+    {{ section.Header(
+                        Mode = 'Basic',
+                        Data = Header['Services']
+                     )
+    }}
+
+    <div class="container">
+        <div class="card card-hero animated slideInUp animation-delay-8 mb-6">
+            <div class="card-body">
+                <h2 class="color-primary text-center">{{ Services['All'][Title].Title }}</h2>
+            </div>
+        </div>
+    </div>
+
+#}
+
+    {% if request.path == Services['All'][Title].href %}
+      {{ section.Header(
+                        Mode = 'Basic',
+                        material_background = 'on',
+                        Category = Services['All'][Title].Title,
+                        Data = Header['Services']
+                     )
+        }}
+
+        {{ section.Info(
+                            Mode = 'Article_Advance',
+                            Service = Services['All'][Title].Title,
+                            Data = Info['Services']
+                       )
+        }}
+
+    {% else %}
+        {{ section.Header(
+                            Mode = 'Basic'
+                         )
+        }}
+        <div class="container">
+            <div class="card card-hero animated slideInUp animation-delay-8 mb-6">
+                <div class="card-body">
+                    <h2 class="color-primary text-center">{{ Message['Нет информации'] }}</h2>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}
